@@ -37,7 +37,7 @@ campaigns_joined_sources as (
         coalesce(total_users, 0) as total_users,
         coalesce(new_users, 0) as new_users,
         coalesce(purchases, 0) as purchases,
-        coalesce(revenue_final, 0) as revenue
+        coalesce(revenue_final, 0) as revenue_final
     from campaigns
     left join sources_aggregated
         on campaigns.campaign_id = sources_aggregated.campaign_id
