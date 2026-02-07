@@ -1,6 +1,6 @@
 [project]
 name = "evidy-dbt-online-ads"
-version = "1.0.1"
+version = "1.0.0"
 description = "dbt project for transforming online marketing data from various platforms into analytics-ready data marts."
 readme = "README.md"
 requires-python = ">=3.13"
