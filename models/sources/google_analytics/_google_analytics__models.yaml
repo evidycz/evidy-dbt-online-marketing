@@ -1,0 +1,6 @@
+version: 2
+
+models:
+  - name: source_google_analytics__events
+  - name: source_google_analytics__items
+  - name: source_google_analytics__sources

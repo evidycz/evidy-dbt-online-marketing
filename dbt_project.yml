@@ -1,0 +1,44 @@
+name: 'evidy_dbt_online_ads'
+version: '1.0.0'
+
+#profile: 'dbt_evidy_dev_data'
+
+model-paths: [ "models" ]
+analysis-paths: [ "analyses" ]
+test-paths: [ "tests" ]
+seed-paths: [ "seeds" ]
+macro-paths: [ "macros" ]
+snapshot-paths: [ "snapshots" ]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  client_name: default-client
+
+  reporting_currency: czk
+
+#  exchange_database: default-database
+#  ads_database: default-database
+
+#  ads__glami_ads_enabled: false
+#  ads__google_ads_enabled: false
+#  ads__meta_ads_enabled: false
+#  ads__seznam_ads_enabled: false
+
+
+models:
+  evidy_dbt_online_ads:
+    +materialized: ephemeral
+    sources:
+      +schema: ads_sources
+      +materialized: view
+      util:
+        +materialized: ephemeral
+    marts:
+      +schema: ads
+      +materialized: table
+    intermediate:
+      +schema: ads_intermediate
+      +materialized: ephemeral

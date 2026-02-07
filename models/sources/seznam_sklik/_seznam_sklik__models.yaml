@@ -1,0 +1,4 @@
+version: 2
+
+models:
+  - name: source_seznam_sklik__campaigns

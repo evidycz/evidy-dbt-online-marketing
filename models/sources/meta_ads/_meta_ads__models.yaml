@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: source_meta_ads__campaigns
+  - name: source_meta_ads__events

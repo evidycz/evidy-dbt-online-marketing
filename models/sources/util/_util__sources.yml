@@ -1,0 +1,11 @@
+version 2:
+
+sources:
+  - name: open_exchange
+    database: "{{ var('exchange_database', target.database) }}"
+    schema: open_exchange
+
+    loader: DLT
+
+    tables:
+      - name: rates

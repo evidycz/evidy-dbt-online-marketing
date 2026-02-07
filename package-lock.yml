@@ -1,0 +1,8 @@
+packages:
+  - name: dbt_utils
+    package: dbt-labs/dbt_utils
+    version: 1.3.3
+  - git: https://github.com/evidycz/evidy-dbt-utils.git
+    name: evidy_dbt_utils
+    revision: df83c4868fab7753058bd0ed8a93effd1f7ce996
+sha1_hash: 365eccca588d47f823fcf887cc710f3f54e85d66

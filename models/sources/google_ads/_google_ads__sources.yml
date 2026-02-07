@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: google_ads
+    database: "{{ var('ads_database', target.database) }}"
+    schema: "{{ var('client_name') }}_google_ads"
+
+    loader: DLT
+
+    tables:
+      - name: campaigns

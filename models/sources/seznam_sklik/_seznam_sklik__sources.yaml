@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: seznam_sklik
+    database: "{{ var('ads_database', target.database) }}"
+    schema: "{{ var('client_name') }}_seznam_sklik"
+
+    loader: DLT
+
+    tables:
+      - name: campaigns

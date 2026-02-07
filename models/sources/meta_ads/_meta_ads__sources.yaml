@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: meta_ads
+    database: "{{ var('ads_database', target.database) }}"
+    schema: "{{ var('client_name') }}_meta_ads"
+
+    loader: DLT
+
+    tables:
+      - name: campaigns
+      - name: campaigns__action_values
+      - name: campaigns__actions
