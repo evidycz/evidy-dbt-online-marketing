@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: google_analytics
     database: "{{ var('ads_database', target.database) }}"
-    schema: "{{ var('client_name') }}_google_analytics"
+    schema: "{{ var('client_name') ~ '_google_analytics' }}"
 
     loader: DLT
 
