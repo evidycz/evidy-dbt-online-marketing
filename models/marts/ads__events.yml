@@ -16,8 +16,17 @@ models:
             sql: "${total_event_value_final} / NULLIF(${total_event_count}, 0)"
             round: 2
             format: '#,##0.00'
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - date_day
+            - key_name
+            - source_medium
+            - event_name
     columns:
       - name: date_day
+        tests:
+          - not_null
         config:
           meta:
             dimension:
@@ -26,7 +35,6 @@ models:
               time_intervals:
                 - DAY
                 - WEEK
-                - MONTH
                 - MONTH
                 - QUARTER
                 - YEAR
@@ -42,6 +50,8 @@ models:
                 - YEAR_NUM
 
       - name: key_name
+        tests:
+          - not_null
         config:
           meta:
             dimension:
@@ -49,6 +59,8 @@ models:
               type: string
 
       - name: source_medium
+        tests:
+          - not_null
         config:
           meta:
             dimension:
@@ -56,6 +68,8 @@ models:
               type: string
 
       - name: event_name
+        tests:
+          - not_null
         config:
           meta:
             dimension:

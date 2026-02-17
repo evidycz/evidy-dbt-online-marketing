@@ -21,8 +21,16 @@ models:
             description: "Purchase rate (items purchased / items added to cart)"
             sql: "${total_items_purchased} / NULLIF(${total_items_added_to_cart}, 0)"
             format: "0.00%"
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - date_day
+            - key_name
+            - item_id
     columns:
       - name: date_day
+        tests:
+          - not_null
         config:
           meta:
             dimension:
@@ -31,7 +39,6 @@ models:
               time_intervals:
                 - DAY
                 - WEEK
-                - MONTH
                 - MONTH
                 - QUARTER
                 - YEAR
@@ -47,6 +54,8 @@ models:
                 - YEAR_NUM
 
       - name: key_name
+        tests:
+          - not_null
         config:
           meta:
             dimension:
@@ -54,6 +63,8 @@ models:
               type: string
 
       - name: item_id
+        tests:
+          - not_null
         config:
           meta:
             dimension:

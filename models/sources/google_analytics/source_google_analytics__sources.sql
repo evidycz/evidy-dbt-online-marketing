@@ -8,8 +8,6 @@ renamed as (
     select
         {{ adapter.quote('date') }} as date_day,
 
-        {{ dbt_utils.generate_surrogate_key(["date", "upper(config_group)", "lower(session_source_medium)"]) }} as join_key,
-
         _dlt_id as row_id,
         property_id as property_id,
         session_campaign_id as campaign_id,
@@ -18,7 +16,6 @@ renamed as (
         session_source_medium as source_medium,
 
         currency_code as analytics_currency,
-
 
         coalesce(sessions, 0) as sessions,
         coalesce(engaged_sessions, 0) as engaged_sessions,

@@ -11,9 +11,6 @@ renamed as (
     select
         {{ adapter.quote('date') }} as date_day,
 
-        {{ dbt_utils.generate_surrogate_key(["date", "upper(config_group)", "account_id", "device", "brand", "category"]) }} as row_key,
-        {{ dbt_utils.generate_surrogate_key(["date", "upper(config_group)", "lower(source_medium)"]) }} as join_key,
-
         account_id as account_id,
         replace(replace(lower(source_medium), ' ', ''), '/', '_')  as campaign_id,
 

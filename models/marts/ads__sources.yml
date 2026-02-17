@@ -22,8 +22,16 @@ models:
             sql: "${total_revenue_final} / NULLIF(${total_ads_cost_final}, 0)"
             round: 2
             format: "#,##0.00"
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - date_day
+            - key_name
+            - source_medium
     columns:
       - name: date_day
+        tests:
+          - not_null
         config:
           meta:
             dimension:
@@ -36,14 +44,19 @@ models:
                 - QUARTER
                 - YEAR
                 - DAY_OF_WEEK_INDEX
+                - DAY_OF_WEEK_NAME
                 - DAY_OF_MONTH_NUM
                 - DAY_OF_YEAR_NUM
                 - WEEK_NUM
                 - MONTH_NUM
+                - MONTH_NAME
                 - QUARTER_NUM
+                - QUARTER_NAME
                 - YEAR_NUM
 
       - name: key_name
+        tests:
+          - not_null
         config:
           meta:
             dimension:
@@ -51,6 +64,8 @@ models:
               type: string
 
       - name: source_medium
+        tests:
+          - not_null
         config:
           meta:
             dimension:

@@ -33,13 +33,13 @@ metrics_exchanged as (
         campaigns_unioned.*,
 
         {% if convert_to_currency %}
-            {{ evidy_dbt_utils.convert_currency('cost', convert_to_currency, convert_from=['czk', 'eur'], currency_column='system_currency') }}
+            {{ evidy_dbt_utils.convert_currency('cost', convert_to_currency, convert_from=['czk', 'eur', 'huf', 'usd'], currency_column='system_currency') }}
         {% else %}
             'cost'
         {% endif %} as cost_final,
 
         {% if convert_to_currency %}
-            {{ evidy_dbt_utils.convert_currency('conversion_value', convert_to_currency, convert_from=['czk', 'eur'], currency_column='system_currency') }}
+            {{ evidy_dbt_utils.convert_currency('conversion_value', convert_to_currency, convert_from=['czk', 'eur', 'huf', 'usd'], currency_column='system_currency') }}
         {% else %}
             'conversion_value'
         {% endif %} as conversion_value_final,

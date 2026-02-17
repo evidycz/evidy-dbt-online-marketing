@@ -16,7 +16,7 @@ items_exchanged as (
         items.*,
 
         {% if convert_to_currency %}
-            {{ evidy_dbt_utils.convert_currency('item_revenue', convert_to_currency, convert_from=['czk', 'eur'], currency_column='analytics_currency') }}
+            {{ evidy_dbt_utils.convert_currency('item_revenue', convert_to_currency, convert_from=['czk', 'eur', 'huf', 'usd'], currency_column='analytics_currency') }}
         {% else %}
             'item_revenue'
         {% endif %} as item_revenue_final,
