@@ -44,6 +44,8 @@ models:
             format: "#,##0.00"
     columns:
       - name: date_day
+        tests:
+          - not_null
         config:
           meta:
             dimension:
@@ -52,7 +54,6 @@ models:
               time_intervals:
                 - DAY
                 - WEEK
-                - MONTH
                 - MONTH
                 - QUARTER
                 - YEAR
@@ -66,18 +67,6 @@ models:
                 - QUARTER_NUM
                 - QUARTER_NAME
                 - YEAR_NUM
-
-      - name: row_key
-        config:
-          meta:
-            dimension:
-              hidden: true
-
-      - name: join_key
-        config:
-          meta:
-            dimension:
-              hidden: true
 
       - name: account_id
         config:
@@ -102,6 +91,8 @@ models:
               hidden: true
 
       - name: key_name
+        tests:
+          - not_null
         config:
           meta:
             dimension:

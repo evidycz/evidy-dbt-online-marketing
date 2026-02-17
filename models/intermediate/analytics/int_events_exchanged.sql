@@ -16,7 +16,7 @@ events_exchanged as (
         events.*,
 
         {% if convert_to_currency %}
-            {{ evidy_dbt_utils.convert_currency('event_value', convert_to_currency, convert_from=['czk', 'eur'], currency_column='analytics_currency') }}
+            {{ evidy_dbt_utils.convert_currency('event_value', convert_to_currency, convert_from=['czk', 'eur', 'huf', 'usd'], currency_column='analytics_currency') }}
         {% else %}
             'event_value'
         {% endif %} as event_value_final,

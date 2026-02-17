@@ -21,7 +21,7 @@ renamed as (
        coalesce(items_added_to_cart, 0) as items_added_to_cart,
        coalesce(items_checked_out, 0) as items_checked_out,
        coalesce(items_purchased, 0) as items_purchased,
-       round(cast(coalesce(item_revenue, 0) as numeric), 2) as item_revenue,
+       round(cast(coalesce(item_revenue, 0) as numeric), 2) as item_revenue
     from source
 )
 

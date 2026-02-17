@@ -25,7 +25,7 @@ sources_aggregated as (
         sum(total_users) as total_users,
         sum(new_users) as new_users,
         sum(purchases) as purchases,
-        sum(revenue_final) as revenue_final,
+        sum(revenue_final) as revenue_final
     from sources
     {{ dbt_utils.group_by(n=4) }}
 ),
