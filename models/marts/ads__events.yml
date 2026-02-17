@@ -1,0 +1,94 @@
+version: 2
+
+models:
+  - name: ads__events
+    description: "Event-level GA4 performance with currency exchange. Tracks event counts and values aggregated by date, key name, source/medium, and event name."
+    config:
+      tags: ["marketing"]
+      meta:
+        label: "Events"
+        order_fields_by: "index"
+        metrics:
+          avg_event_value:
+            type: number
+            label: "Avg Event Value"
+            description: "Average value per event"
+            sql: "${total_event_value_final} / NULLIF(${total_event_count}, 0)"
+            round: 2
+            format: '#,##0.00'
+    columns:
+      - name: date_day
+        config:
+          meta:
+            dimension:
+              label: "Date"
+              type: date
+              time_intervals:
+                - DAY
+                - WEEK
+                - MONTH
+                - MONTH
+                - QUARTER
+                - YEAR
+                - DAY_OF_WEEK_INDEX
+                - DAY_OF_WEEK_NAME
+                - DAY_OF_MONTH_NUM
+                - DAY_OF_YEAR_NUM
+                - WEEK_NUM
+                - MONTH_NUM
+                - MONTH_NAME
+                - QUARTER_NUM
+                - QUARTER_NAME
+                - YEAR_NUM
+
+      - name: key_name
+        config:
+          meta:
+            dimension:
+              label: "Key Name"
+              type: string
+
+      - name: source_medium
+        config:
+          meta:
+            dimension:
+              label: "Source / Medium"
+              type: string
+
+      - name: event_name
+        config:
+          meta:
+            dimension:
+              label: "Event Name"
+              type: string
+
+      - name: currency_code_final
+        config:
+          meta:
+            dimension:
+              label: "Currency Code"
+              type: string
+
+      - name: event_count
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_event_count:
+                type: sum
+                label: "Event Count"
+                description: "Total event count"
+
+      - name: event_value_final
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_event_value_final:
+                type: sum
+                label: "Event Value"
+                description: "Total event value in reporting currency"
+                round: 2
+                format: '#,##0.00'
