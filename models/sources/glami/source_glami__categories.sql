@@ -17,7 +17,7 @@ renamed as (
         currency_code as system_currency,
 
         upper(config_group) as key_name,
-        upper(_config_name) as system_name,
+        upper(system_name) as system_name,
         lower(source_medium) as source_medium,
         'glami' as campaign_name,
         'unknown' as campaign_status,
