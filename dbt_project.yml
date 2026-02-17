@@ -1,5 +1,5 @@
 name: 'evidy_dbt_online_ads'
-version: '1.0.3'
+version: '1.0.4'
 
 #profile: 'dbt_evidy_dev_data'
 
