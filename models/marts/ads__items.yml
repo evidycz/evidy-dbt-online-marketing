@@ -1,0 +1,143 @@
+version: 2
+
+models:
+  - name: ads__items
+    description: "Item-level e-commerce performance from GA4 with currency exchange. Tracks product funnel metrics (views, add-to-cart, checkout, purchases, revenue) aggregated by date, key name, and item."
+    config:
+      tags: ["marketing"]
+      meta:
+        label: "Items"
+        order_fields_by: "index"
+        metrics:
+          cart_rate:
+            type: number
+            label: "Cart Rate"
+            description: "Add-to-cart rate (items added to cart / items viewed)"
+            sql: "${total_items_added_to_cart} / NULLIF(${total_items_viewed}, 0)"
+            format: "0.00%"
+          purchase_rate:
+            type: number
+            label: "Purchase Rate"
+            description: "Purchase rate (items purchased / items added to cart)"
+            sql: "${total_items_purchased} / NULLIF(${total_items_added_to_cart}, 0)"
+            format: "0.00%"
+    columns:
+      - name: date_day
+        config:
+          meta:
+            dimension:
+              label: "Date"
+              type: date
+              time_intervals:
+                - DAY
+                - WEEK
+                - MONTH
+                - MONTH
+                - QUARTER
+                - YEAR
+                - DAY_OF_WEEK_INDEX
+                - DAY_OF_WEEK_NAME
+                - DAY_OF_MONTH_NUM
+                - DAY_OF_YEAR_NUM
+                - WEEK_NUM
+                - MONTH_NUM
+                - MONTH_NAME
+                - QUARTER_NUM
+                - QUARTER_NAME
+                - YEAR_NUM
+
+      - name: key_name
+        config:
+          meta:
+            dimension:
+              label: "Key Name"
+              type: string
+
+      - name: item_id
+        config:
+          meta:
+            dimension:
+              label: "Item ID"
+              type: string
+
+      - name: item_name
+        config:
+          meta:
+            dimension:
+              label: "Item Name"
+              type: string
+
+      - name: currency_code_final
+        config:
+          meta:
+            dimension:
+              label: "Currency Code"
+              type: string
+
+      - name: items_viewed
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_items_viewed:
+                type: sum
+                label: "Items Viewed"
+                description: "Total item detail views"
+
+      - name: items_viewed_in_list
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_items_viewed_in_list:
+                type: sum
+                label: "Items Viewed in List"
+                description: "Total item list views"
+
+      - name: items_added_to_cart
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_items_added_to_cart:
+                type: sum
+                label: "Items Added to Cart"
+                description: "Total items added to cart"
+
+      - name: items_checked_out
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_items_checked_out:
+                type: sum
+                label: "Items Checked Out"
+                description: "Total items checked out"
+
+      - name: items_purchased
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_items_purchased:
+                type: sum
+                label: "Items Purchased"
+                description: "Total items purchased"
+
+      - name: item_revenue_final
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_item_revenue_final:
+                type: sum
+                label: "Item Revenue"
+                description: "Total item revenue in reporting currency"
+                round: 2
+                format: '#,##0.00'
