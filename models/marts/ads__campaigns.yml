@@ -1,4 +1,284 @@
 version: 2
 
-sources:
+models:
   - name: ads__campaigns
+    description: "Campaign-level marketing performance combining ad platform data with GA4 sessions and revenue. Joins unified ad costs (impressions, clicks, conversions, spend) with aggregated Google Analytics metrics (sessions, users, purchases, revenue) by campaign, date, and source/medium."
+    config:
+      tags: ["marketing"]
+      meta:
+        label: "Campaigns"
+        order_fields_by: "index"
+        metrics:
+          cpm:
+            type: number
+            label: "CPM"
+            description: "Cost per mille (cost per 1,000 impressions)"
+            sql: "${total_cost_final} / NULLIF(${total_impressions}, 0) * 1000"
+            round: 2
+            format: '#,##0.00 '
+          cpc:
+            type: number
+            label: "CPC"
+            description: "Cost per click"
+            sql: "${total_cost_final} / NULLIF(${total_clicks}, 0)"
+            round: 2
+            format: '#,##0.00 '
+          ctr:
+            type: number
+            label: "CTR"
+            description: "Click-through rate"
+            sql: "${total_clicks} / NULLIF(${total_impressions}, 0)"
+            format: "0.00%"
+          pno:
+            type: number
+            label: "PNO"
+            description: "Share of advertising costs on revenue"
+            sql: "${total_cost_final} / NULLIF(${total_revenue_final}, 0)"
+            format: "0.00%"
+          roas:
+            type: number
+            label: "ROAS"
+            description: "Return on ad spend"
+            sql: "${total_revenue_final} / NULLIF(${total_cost_final}, 0)"
+            round: 2
+            format: "#,##0.00"
+    columns:
+      - name: date_day
+        config:
+          meta:
+            dimension:
+              label: "Date"
+              type: date
+              time_intervals:
+                - DAY
+                - WEEK
+                - MONTH
+                - MONTH
+                - QUARTER
+                - YEAR
+                - DAY_OF_WEEK_INDEX
+                - DAY_OF_WEEK_NAME
+                - DAY_OF_MONTH_NUM
+                - DAY_OF_YEAR_NUM
+                - WEEK_NUM
+                - MONTH_NUM
+                - MONTH_NAME
+                - QUARTER_NUM
+                - QUARTER_NAME
+                - YEAR_NUM
+
+      - name: row_key
+        config:
+          meta:
+            dimension:
+              hidden: true
+
+      - name: join_key
+        config:
+          meta:
+            dimension:
+              hidden: true
+
+      - name: account_id
+        config:
+          meta:
+            dimension:
+              label: "Account ID"
+              type: string
+
+      - name: campaign_id
+        config:
+          meta:
+            dimension:
+              label: "Campaign ID"
+              type: string
+
+      - name: system_currency
+        config:
+          meta:
+            dimension:
+              label: "System Currency"
+              type: string
+              hidden: true
+
+      - name: key_name
+        config:
+          meta:
+            dimension:
+              label: "Key Name"
+              type: string
+
+      - name: system_name
+        config:
+          meta:
+            dimension:
+              label: "System Name"
+              type: string
+
+      - name: source_medium
+        config:
+          meta:
+            dimension:
+              label: "Source / Medium"
+              type: string
+
+      - name: campaign_name
+        config:
+          meta:
+            dimension:
+              label: "Campaign Name"
+              type: string
+
+      - name: campaign_status
+        config:
+          meta:
+            dimension:
+              label: "Campaign Status"
+              type: string
+
+      - name: impressions
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_impressions:
+                type: sum
+                label: "Impressions"
+                description: "Total impressions"
+
+      - name: clicks
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_clicks:
+                type: sum
+                label: "Clicks"
+                description: "Total clicks"
+
+      - name: conversions
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_conversions:
+                type: sum
+                label: "Conversions"
+                description: "Total conversions"
+                round: 2
+
+      - name: cost
+        config:
+          meta:
+            dimension:
+              hidden: true
+
+      - name: cost_final
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_cost_final:
+                type: sum
+                label: "Ad Spend"
+                description: "Total cost in reporting currency"
+                round: 2
+                format: '#,##0.00'
+
+      - name: conversion_value
+        config:
+          meta:
+            dimension:
+              hidden: true
+
+      - name: conversion_value_final
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_conversion_value_final:
+                type: sum
+                label: "Conversion Value"
+                description: "Total conversion value in reporting currency"
+                round: 2
+                format: '#,##0.00 '
+
+      - name: currency_code_final
+        config:
+          meta:
+            dimension:
+              label: "Currency Code"
+              type: string
+
+      - name: sessions
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_sessions:
+                type: sum
+                label: "Sessions"
+                description: "Total sessions"
+
+      - name: engaged_sessions
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_engaged_sessions:
+                type: sum
+                label: "Engaged Sessions"
+                description: "Total engaged sessions"
+
+      - name: total_users
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_users:
+                type: sum
+                label: "Total Users"
+                description: "Total users"
+
+      - name: new_users
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_new_users:
+                type: sum
+                label: "New Users"
+                description: "Total new users"
+
+      - name: purchases
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_purchases:
+                type: sum
+                label: "Purchases"
+                description: "Total purchases"
+
+      - name: revenue_final
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_revenue_final:
+                type: sum
+                label: "Revenue"
+                description: "Total revenue in reporting currency"
+                round: 2
+                format: '#,##0.00 '
