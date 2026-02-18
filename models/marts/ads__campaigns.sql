@@ -14,7 +14,9 @@ sources_aggregated as (
         campaign_id,
         date_day,
         key_name,
-        source_medium,
+        source_clean as source,
+        medium,
+        source_medium_clean as source_medium,
 
         currency_code_final,
 
@@ -25,7 +27,7 @@ sources_aggregated as (
         sum(purchases) as purchases,
         sum(revenue_final) as revenue_final
     from sources
-    {{ dbt_utils.group_by(n=5) }}
+    {{ dbt_utils.group_by(n=7) }}
 ),
 
 campaigns_joined_sources as (

@@ -9,7 +9,7 @@ items_aggregated as (
         date_day,
         key_name,
         item_id,
-        item_name,
+
         currency_code_final,
 
         sum(items_viewed) as items_viewed,
@@ -19,7 +19,7 @@ items_aggregated as (
         sum(items_purchased) as items_purchased,
         sum(item_revenue_final) as item_revenue_final
     from items
-    {{ dbt_utils.group_by(n=5) }}
+    {{ dbt_utils.group_by(n=4) }}
 )
 
 select * from items_aggregated
