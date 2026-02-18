@@ -18,11 +18,12 @@ models:
             format: '#,##0.00'
     tests:
       - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - date_day
-            - key_name
-            - source_medium
-            - event_name
+          arguments:
+            combination_of_columns:
+              - date_day
+              - key_name
+              - source_medium
+              - event_name
     columns:
       - name: date_day
         tests:

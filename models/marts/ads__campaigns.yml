@@ -42,6 +42,13 @@ models:
             sql: "${total_revenue_final} / NULLIF(${total_cost_final}, 0)"
             round: 2
             format: "#,##0.00"
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - date_day
+              - key_name
+              - campaign_id
     columns:
       - name: date_day
         tests:
