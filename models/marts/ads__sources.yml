@@ -22,6 +22,39 @@ models:
             sql: "${total_revenue_final} / NULLIF(${total_ads_cost_final}, 0)"
             round: 2
             format: "#,##0.00"
+          cpa:
+            type: number
+            label: "CPA"
+            description: "Cost per acquisition (purchase)"
+            sql: "${total_ads_cost_final} / NULLIF(${total_purchases}, 0)"
+            round: 2
+            format: "#,##0.00"
+          cps:
+            type: number
+            label: "CPS"
+            description: "Cost per session"
+            sql: "${total_ads_cost_final} / NULLIF(${total_sessions}, 0)"
+            round: 2
+            format: "#,##0.00"
+          cpse:
+            type: number
+            label: "CPSe"
+            description: "Cost per engaged session"
+            sql: "${total_ads_cost_final} / NULLIF(${total_engaged_sessions}, 0)"
+            round: 2
+            format: "#,##0.00"
+          engagement_rate:
+            type: number
+            label: "Engagement Rate"
+            description: "Engaged sessions / sessions"
+            sql: "${total_engaged_sessions} / NULLIF(${total_sessions}, 0)"
+            format: "0.00%"
+          purchase_rate:
+            type: number
+            label: "Purchase Rate"
+            description: "Session-to-purchase conversion rate (purchases / sessions)"
+            sql: "${total_purchases} / NULLIF(${total_sessions}, 0)"
+            format: "0.00%"
     tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:
@@ -62,6 +95,20 @@ models:
           meta:
             dimension:
               label: "Key Name"
+              type: string
+
+      - name: source
+        config:
+          meta:
+            dimension:
+              label: "Source"
+              type: string
+
+      - name: medium
+        config:
+          meta:
+            dimension:
+              label: "Medium"
               type: string
 
       - name: source_medium

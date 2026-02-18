@@ -59,6 +59,20 @@ models:
               label: "Key Name"
               type: string
 
+      - name: source
+        config:
+          meta:
+            dimension:
+              label: "Source"
+              type: string
+
+      - name: medium
+        config:
+          meta:
+            dimension:
+              label: "Medium"
+              type: string
+
       - name: source_medium
         tests:
           - not_null

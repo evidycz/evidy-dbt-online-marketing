@@ -42,6 +42,59 @@ models:
             sql: "${total_revenue_final} / NULLIF(${total_cost_final}, 0)"
             round: 2
             format: "#,##0.00"
+          cpa:
+            type: number
+            label: "CPA"
+            description: "Cost per acquisition (purchase)"
+            sql: "${total_cost_final} / NULLIF(${total_purchases}, 0)"
+            round: 2
+            format: "#,##0.00"
+          cpa_conversions:
+            type: number
+            label: "CPA (Conversions)"
+            description: "Cost per conversion (ad platform)"
+            sql: "${total_cost_final} / NULLIF(${total_conversions}, 0)"
+            round: 2
+            format: "#,##0.00"
+          pno_conversion_value:
+            type: number
+            label: "PNO (Conversion Value)"
+            description: "Share of advertising costs on conversion value (ad platform)"
+            sql: "${total_cost_final} / NULLIF(${total_conversion_value_final}, 0)"
+            format: "0.00%"
+          roas_conversion_value:
+            type: number
+            label: "ROAS (Conversion Value)"
+            description: "Return on ad spend based on conversion value (ad platform)"
+            sql: "${total_conversion_value_final} / NULLIF(${total_cost_final}, 0)"
+            round: 2
+            format: "#,##0.00"
+          conversion_rate:
+            type: number
+            label: "Conversion Rate"
+            description: "Ad platform conversion rate (conversions / clicks)"
+            sql: "${total_conversions} / NULLIF(${total_clicks}, 0)"
+            format: "0.00%"
+          engagement_rate:
+            type: number
+            label: "Engagement Rate"
+            description: "Engaged sessions / sessions"
+            sql: "${total_engaged_sessions} / NULLIF(${total_sessions}, 0)"
+            format: "0.00%"
+          cps:
+            type: number
+            label: "CPS"
+            description: "Cost per session"
+            sql: "${total_cost_final} / NULLIF(${total_sessions}, 0)"
+            round: 2
+            format: "#,##0.00"
+          cpse:
+            type: number
+            label: "CPSe"
+            description: "Cost per engaged session"
+            sql: "${total_cost_final} / NULLIF(${total_engaged_sessions}, 0)"
+            round: 2
+            format: "#,##0.00"
     tests:
       - dbt_utils.unique_combination_of_columns:
           arguments:
