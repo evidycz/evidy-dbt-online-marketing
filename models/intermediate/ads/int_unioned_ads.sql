@@ -28,9 +28,32 @@ rates as (
     from {{ ref('source_exchange__rates') }}
 ),
 
+campaigns_aggregated as (
+    select
+        date_day,
+        account_id,
+        campaign_id,
+        system_currency,
+
+        key_name,
+        system_name,
+        source_medium,
+        campaign_status,
+
+        array_agg(campaign_name order by  date_day desc limit 1)[offset(0)] as campaign_name,
+
+        sum(impressions) as impressions,
+        sum(clicks) as clicks,
+        sum(conversions) as conversions,
+        sum(conversion_value) as conversion_value,
+        sum(cost) as cost
+    from campaigns_unioned
+    {{ dbt_utils.group_by(n=8) }}
+),
+
 metrics_exchanged as (
     select
-        campaigns_unioned.*,
+        campaigns_aggregated.*,
 
         {% if convert_to_currency %}
             {{ evidy_dbt_utils.convert_currency('cost', convert_to_currency, convert_from=['czk', 'eur', 'huf', 'usd'], currency_column='system_currency') }}
@@ -47,12 +70,12 @@ metrics_exchanged as (
         {% if convert_to_currency %}
             upper('{{ convert_to_currency }}')
         {% else %}
-            campaigns_unioned.system_currency
+            campaigns_aggregated.system_currency
         {% endif %} as currency_code_final
 
-    from campaigns_unioned
+    from campaigns_aggregated
     left join rates
-        on campaigns_unioned.date_day = rates.date_day
+        on campaigns_aggregated.date_day = rates.date_day
 )
 
 select * from metrics_exchanged
