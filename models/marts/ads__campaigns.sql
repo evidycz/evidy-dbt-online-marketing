@@ -41,6 +41,8 @@ campaigns_joined_sources as (
     from campaigns
     left join sources_aggregated
         on campaigns.campaign_id = sources_aggregated.campaign_id
+        and campaigns.source_medium = sources_aggregated.source_medium
+        and campaigns.key_name = sources_aggregated.key_name
         and campaigns.date_day = sources_aggregated.date_day
 )
 

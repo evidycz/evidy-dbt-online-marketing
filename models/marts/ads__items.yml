@@ -23,10 +23,12 @@ models:
             format: "0.00%"
     tests:
       - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - date_day
-            - key_name
-            - item_id
+          arguments:
+            combination_of_columns:
+              - date_day
+              - key_name
+              - item_id
+              - item_name
     columns:
       - name: date_day
         tests:
