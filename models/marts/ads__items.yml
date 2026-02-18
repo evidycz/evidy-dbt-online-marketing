@@ -28,7 +28,6 @@ models:
               - date_day
               - key_name
               - item_id
-              - item_name
     columns:
       - name: date_day
         tests:
@@ -71,13 +70,6 @@ models:
           meta:
             dimension:
               label: "Item ID"
-              type: string
-
-      - name: item_name
-        config:
-          meta:
-            dimension:
-              label: "Item Name"
               type: string
 
       - name: currency_code_final

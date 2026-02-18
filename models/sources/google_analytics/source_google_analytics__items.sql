@@ -12,7 +12,6 @@ renamed as (
        item_id as item_id,
        
        upper(config_group) as key_name,
-       item_name as item_name,
 
        currency_code as analytics_currency,
 

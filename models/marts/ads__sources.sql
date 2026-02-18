@@ -17,7 +17,9 @@ sources_aggregated as (
     select
         date_day,
         key_name,
-        source_medium,
+        source_clean as source,
+        medium,
+        source_medium_clean as source_medium,
         currency_code_final as currency_code,
 
         sum(sessions) as sessions,
@@ -27,7 +29,7 @@ sources_aggregated as (
         sum(purchases) as purchases,
         sum(revenue_final) as revenue_final
     from sources
-    {{ dbt_utils.group_by(n=4) }}
+    {{ dbt_utils.group_by(n=6) }}
 ),
 
 costs_aggregated as (
