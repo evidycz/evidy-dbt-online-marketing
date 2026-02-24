@@ -12,7 +12,14 @@ renamed as (
         {{ adapter.quote('date') }} as date_day,
 
         account_id as account_id,
-        replace(replace(lower(source_medium), ' ', ''), '/', '_')  as campaign_id,
+{#        replace(replace(lower(source_medium), ' ', ''), '/', '_')  as campaign_id,#}
+
+        case
+            when currency_code= 'CZK' then 'glami.cz_cpc'
+            when currency_code= 'EUR' then 'glami.sk_cpc'
+            when currency_code= 'HUF' then 'glami.hu_cpc'
+            else 'glami.unknown_cpc'
+        end as campaign_id,
 
         currency_code as system_currency,
 
