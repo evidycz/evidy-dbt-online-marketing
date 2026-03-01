@@ -1,7 +1,7 @@
 with
 source as (
     select *
-    from {{ source('open_exchange', 'rates') }}
+    from {{ source('ads_open_exchange', 'rates') }}
 ),
 
 renamed as (
