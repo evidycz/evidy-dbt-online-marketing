@@ -24,7 +24,14 @@ renamed as (
         coalesce(total_users, 0) as total_users,
         coalesce(new_users, 0) as new_users,
         coalesce(ecommerce_purchases, 0) as purchases,
-        round(cast(coalesce(purchase_revenue, 0) as numeric), 2) as revenue
+
+        -- `purchase_revenue` is the GA4 `value` parameter and `tax_amount` the `tax`
+        -- parameter, both in the property's own currency. They are summed here, before
+        -- the FX conversion in `int_sources_exchanged`, so `revenue` stays tax-inclusive
+        -- across the tagging change and is converted exactly once.
+        round(cast(coalesce(purchase_revenue, 0) as numeric), 2) as revenue_net,
+        round(cast(coalesce(tax_amount, 0) as numeric), 2) as tax,
+        round(cast(coalesce(purchase_revenue, 0) + coalesce(tax_amount, 0) as numeric), 2) as revenue
     from source
 ),
 
