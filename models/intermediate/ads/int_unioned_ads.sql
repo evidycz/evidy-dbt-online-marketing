@@ -1,17 +1,19 @@
 {% set convert_to_currency = var('reporting_currency', None) %}
 
+{#  (enable var, model, default when the var is unset) #}
 {%  set source_config = [
-    ('ads__glami_ads_enabled',  'source_glami__categories'),
-    ('ads__google_ads_enabled', 'source_google_ads__campaigns'),
-    ('ads__meta_ads_enabled',   'source_meta_ads__campaigns'),
-    ('ads__seznam_ads_enabled', 'source_seznam_sklik__campaigns')
+    ('ads__glami_ads_enabled',   'source_glami__categories',       true),
+    ('ads__google_ads_enabled',  'source_google_ads__campaigns',   true),
+    ('ads__heureka_ads_enabled', 'source_heureka__performance',    false),
+    ('ads__meta_ads_enabled',    'source_meta_ads__campaigns',     true),
+    ('ads__seznam_ads_enabled',  'source_seznam_sklik__campaigns', true)
 ] %}
 
 {% set relations_to_union = [] %}
 
-{% for var_name, model_name in source_config %}
+{% for var_name, model_name, enabled_by_default in source_config %}
 
-    {% if var(var_name, true) %}
+    {% if var(var_name, enabled_by_default) %}
         {% do relations_to_union.append(ref(model_name)) %}
     {% endif %}
 

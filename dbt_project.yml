@@ -1,5 +1,5 @@
 name: 'evidy_dbt_online_ads'
-version: '2.0.1'
+version: '2.1.0'
 
 #profile: 'dbt_evidy_dev_data'
 
@@ -24,6 +24,7 @@ vars:
 
 #  ads__glami_ads_enabled: false
 #  ads__google_ads_enabled: false
+#  ads__heureka_ads_enabled: true
 #  ads__meta_ads_enabled: false
 #  ads__seznam_ads_enabled: false
 
