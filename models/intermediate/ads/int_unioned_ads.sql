@@ -2,11 +2,12 @@
 
 {#  (enable var, model, default when the var is unset) #}
 {%  set source_config = [
-    ('ads__glami_ads_enabled',   'source_glami__categories',       true),
-    ('ads__google_ads_enabled',  'source_google_ads__campaigns',   true),
-    ('ads__heureka_ads_enabled', 'source_heureka__performance',    false),
-    ('ads__meta_ads_enabled',    'source_meta_ads__campaigns',     true),
-    ('ads__seznam_ads_enabled',  'source_seznam_sklik__campaigns', true)
+    ('ads__glami_ads_enabled',    'source_glami__categories',       true),
+    ('ads__google_ads_enabled',   'source_google_ads__campaigns',   true),
+    ('ads__heureka_ads_enabled',  'source_heureka__performance',    false),
+    ('ads__meta_ads_enabled',     'source_meta_ads__campaigns',     true),
+    ('ads__seznam_ads_enabled',   'source_seznam_sklik__campaigns', true),
+    ('ads__srovname_ads_enabled', 'source_srovname__performance',   false)
 ] %}
 
 {% set relations_to_union = [] %}
