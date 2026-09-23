@@ -50,6 +50,7 @@ Each ad platform can be individually enabled or disabled. When disabled, the pla
 | `ads__seznam_ads_enabled` | `true` | Enable Seznam/Sklik data |
 | `ads__glami_ads_enabled` | `true` | Enable Glami data |
 | `ads__heureka_ads_enabled` | `false` | Enable Heureka data (heureka.cz, heureka.sk, arukereso.hu). Off by default, because most clients have no Heureka dataset. |
+| `ads__srovname_ads_enabled` | `false` | Enable Srovnáme.cz data. Off by default, because most clients have no Srovnáme dataset. |
 
 Google Analytics sources are always enabled (no feature flag).
 
@@ -128,6 +129,15 @@ All platform sources produce: `date_day`, `account_id`, `campaign_id`, `system_c
 - **Field mappings:** `visits_total` → clicks, `costs_without_vat_total` → cost (the admin's "Náklady"), `orders_total` → conversions, `revenue_total` → conversion_value
 - **Hardcoded values:** `impressions` = 0 (not reported), `campaign_status` = `'unknown'`
 - **Conversions:** `orders_total` and `revenue_total` stay 0 unless the shop has Heureka conversion tracking installed
+
+### Srovnáme.cz
+
+- **Source table:** `srovname.performance`, loaded by the clients-reporting `srovname` dlt connector from the Srovnáme.cz REST API
+- **Disabled by default:** set `ads__srovname_ads_enabled: true` for clients that load Srovnáme.cz
+- **Granularity:** already one row per shop and day; Srovnáme.cz has no campaigns, so the shop is one campaign `srovname.cz_cpc`
+- **Field mappings:** `clicks` → clicks, `costs` → cost (the admin's "Cena za prokliky"), `conversions` → conversions, `conversion_value` → conversion_value (product value excluding VAT)
+- **Hardcoded values:** `impressions` = 0 (not reported), `campaign_name` = `'srovname.cz'`, `campaign_status` = `'unknown'`
+- **Also declared:** `srovname.conversions`, one row per order, for clients that report Srovnáme's orders themselves; the package does not read it
 
 ### Google Analytics (GA4)
 
