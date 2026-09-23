@@ -49,6 +49,7 @@ Each ad platform can be individually enabled or disabled. When disabled, the pla
 | `ads__meta_ads_enabled` | `true` | Enable Meta (Facebook) Ads data |
 | `ads__seznam_ads_enabled` | `true` | Enable Seznam/Sklik data |
 | `ads__glami_ads_enabled` | `true` | Enable Glami data |
+| `ads__heureka_ads_enabled` | `false` | Enable Heureka data (heureka.cz, heureka.sk, arukereso.hu). Off by default, because most clients have no Heureka dataset. |
 
 Google Analytics sources are always enabled (no feature flag).
 
@@ -117,6 +118,16 @@ All platform sources produce: `date_day`, `account_id`, `campaign_id`, `system_c
 - **Cost unit:** Standard (`costs` field, no conversion needed)
 - **Field mappings:** `exit_clicks` → clicks, `orders` → conversions, `gmv` → conversion_value
 - **Hardcoded values:** `impressions` = 0 (not tracked), `campaign_name` = `'glami'`, `campaign_status` = `'unknown'`
+
+### Heureka
+
+- **Source table:** `heureka.performance`, loaded by the clients-reporting `heureka` dlt connector from the API Gateway conversions report
+- **Disabled by default:** set `ads__heureka_ads_enabled: true` for clients that load Heureka
+- **Granularity:** the raw table is per product, click source and bidded position; the source aggregates it to one row per portal and day
+- **Campaigns:** one per portal, `heureka.cz_cpc`, `heureka.sk_cpc` or `arukereso.hu_cpc`, with `campaign_name` set to the portal host
+- **Field mappings:** `visits_total` → clicks, `costs_without_vat_total` → cost (the admin's "Náklady"), `orders_total` → conversions, `revenue_total` → conversion_value
+- **Hardcoded values:** `impressions` = 0 (not reported), `campaign_status` = `'unknown'`
+- **Conversions:** `orders_total` and `revenue_total` stay 0 unless the shop has Heureka conversion tracking installed
 
 ### Google Analytics (GA4)
 
